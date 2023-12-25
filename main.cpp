@@ -73,6 +73,8 @@ std::vector<MyCircle> readConfigFile(const std::string &filePath) {
                     std::stof(configs[7]), std::stof(configs[8]));
     shapes.push_back(circle);
   }
+  std::cout << "Objects loaded: " << shapes.size() << std::endl;
+
   configFile.close();
   return shapes;
 }
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]) {
   window.setFramerateLimit(FPS);
 
   std::vector<MyCircle> circles = readConfigFile("config.txt");
-  std::cout << "Objects loaded: " << circles.size() << std::endl;
+  bool isBounce = true;
 
   while (window.isOpen()) {
     sf::Event event;
@@ -90,12 +92,19 @@ int main(int argc, char *argv[]) {
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed)
         window.close();
+      if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Escape)
+          window.close();
+        if (event.key.code == sf::Keyboard::Space)
+          isBounce = !isBounce;
+      }
     }
 
     window.clear();
 
     for (MyCircle &circle : circles) {
-      circle.setBounce();
+      if (isBounce)
+        circle.setBounce();
       window.draw(circle);
     }
 
