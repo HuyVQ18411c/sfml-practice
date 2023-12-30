@@ -24,5 +24,4 @@ private:
   std::string m_Tag = "default";
   Entity() = default;
   Entity(const size_t id, const std::string &tag);
-  ~Entity();
 };

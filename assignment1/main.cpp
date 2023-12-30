@@ -1,9 +1,11 @@
-#include "SFML/Graphics.hpp"
+// C++ Libraries
 #include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
+// 3rd party Libraries
+#include "SFML/Graphics.hpp"
 
 #define W_HEIGHT 720
 #define W_WIDTH 1200
