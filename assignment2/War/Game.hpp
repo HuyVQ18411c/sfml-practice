@@ -35,6 +35,7 @@ private:
   PlayerConfig m_PlayerConfig;
   EnemyConfig m_EnemyConfig;
   int m_Score = 0;
+  int m_LastEnemySpawnTime = 0;
   int m_CurrentFrame = 0;
   bool m_IsPaused = false;
   bool m_IsRunning = false;

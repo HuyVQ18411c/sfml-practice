@@ -1,12 +1,33 @@
+#include <algorithm>
 #include <memory>
 #include <string>
 
 #include "EntityManager.hpp"
 
 std::shared_ptr<Entity> EntityManager::addEntity(const std::string &entityTag) {
-  return std::shared_ptr<Entity>(new Entity(m_TotalEntities++, entityTag));
+  auto entity =
+      std::shared_ptr<Entity>(new Entity(m_TotalEntities++, entityTag));
+  m_EntitiesToAdd.push_back(entity);
+  return entity;
 }
 
-void EntityManager::removeDeadEntities(EntityVec &entities) {}
+void EntityManager::removeDeadEntities(EntityVec &entities) {
+  EntityVec entitiesToRemove;
 
-void EntityManager::update() { removeDeadEntities(m_Entities); }
+  std::remove_if(entities.begin(), entities.end(),
+                 [](const std::shared_ptr<Entity> &entity) {
+                   return !entity->isActive();
+                 });
+}
+
+void EntityManager::update() {
+  // Release waiting queue
+  for (auto e : m_EntitiesToAdd) {
+    m_Entities.push_back(e);
+    m_EntitiesMap[e->getTag()].push_back(e);
+  }
+  m_EntitiesToAdd.clear();
+
+  // Remove dead entities
+  removeDeadEntities(m_Entities);
+}
