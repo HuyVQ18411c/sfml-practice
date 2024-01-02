@@ -96,7 +96,7 @@ void Game::sRender() {
   m_Window.clear();
 
   for (auto &entity : m_EntityManager.getEntities()) {
-    m_Window.draw(entity);
+    m_Window.draw(entity->cShape->circle);
   }
   // Draw objects
   m_Window.display();

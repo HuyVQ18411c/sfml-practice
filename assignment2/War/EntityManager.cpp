@@ -11,13 +11,15 @@ std::shared_ptr<Entity> EntityManager::addEntity(const std::string &entityTag) {
   return entity;
 }
 
+const EntityVec &EntityManager::getEntities() const { return m_Entities; }
+
 void EntityManager::removeDeadEntities(EntityVec &entities) {
   EntityVec entitiesToRemove;
 
-  std::remove_if(entities.begin(), entities.end(),
-                 [](const std::shared_ptr<Entity> &entity) {
-                   return !entity->isActive();
-                 });
+  //  std::remove_if(entities.begin(), entities.end(),
+  //                 [](const std::shared_ptr<Entity> &entity) {
+  //                   return !entity->isActive();
+  //                 });
 }
 
 void EntityManager::update() {
